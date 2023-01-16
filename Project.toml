@@ -1,0 +1,13 @@
+name = "plutoviz"
+uuid = "e0ee01c5-3f2e-4a2e-9504-a80825d89bf5"
+authors = ["Stefan Wojcik"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
