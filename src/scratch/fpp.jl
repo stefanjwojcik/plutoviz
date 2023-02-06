@@ -1,5 +1,5 @@
 ## Script to understand simple forecasting principles 
-using RCall, TimeSeries, MarketData, Plots 
+using RCall, TimeSeries, MarketData, Plots, Dates 
 using CSV, DataFrames, Statistics, StateSpaceModels
 
 # CUSTOM FUNCTION ZONE 
@@ -51,8 +51,10 @@ end
 ## Manipulating AAPL time series data 
 ya = yahoo(:AAPL, YahooOpt(period1 = DateTime("2015-01-01")))
 ## Example NGR data
-ngr = CSV.read("example_ngr.csv", DataFrame)
-ngr = TimeArray(map(fixdate, ngr[!, :date]), ngr[!, :price], [:price])
+ngr = CSV.read("src/example_ngr.csv", DataFrame) |> 
+    (data -> TimeArray(map(fixdate, data[!, :date]), data[!, :price], [:price]))
+#ngr = TimeArray(map(fixdate, ngr[!, :date]), ngr[!, :price], [:price])
+
 
 ## Plotting the data
 plot(ya, title = "Apple Stock Price", ylabel = "Price", xlabel = "Date")
@@ -105,3 +107,7 @@ function myarima(x, order)
     R"arima($x, $order)"
 end
 # example usage: myarima(ngr.price, [0,1,0])
+function forecast(myarima, h)
+    out = R"predict($myarima, $h)$pred"
+    [x for x in out]
+end
