@@ -4,6 +4,5 @@
 /Manifest.toml
 /docs/build/
 
-*.csv
 api_config.json
 *.pdf
